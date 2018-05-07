@@ -1,5 +1,6 @@
 ### Golang binglog example project
 
+tested on go 10.10 and mariadb10.2 (binlog format must be 'raw')
 In binlog.go change with your connection data
 ```
 cfg.Addr = fmt.Sprintf("%s:%d", "127.0.0.1", 3306) //host,port
