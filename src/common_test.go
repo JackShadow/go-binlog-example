@@ -10,7 +10,7 @@ import (
 func TestCommonHandler_GetBinLogDataGetBinLogData_Insert(t *testing.T) {
 
 	model := binlogTestStruct{}
-	handler := CommonHandler{}
+	handler := BinlogParser{}
 	rows := make([][]interface{}, 1)
 	insertRows := make([]interface{}, 8)
 	insertRows[0] = 1
@@ -66,7 +66,7 @@ func TestCommonHandler_GetBinLogDataGetBinLogData_Insert(t *testing.T) {
 func TestCommonHandler_GetBinLogDataGetBinLogData_Update(t *testing.T) {
 
 	model := binlogTestStruct{}
-	handler := CommonHandler{}
+	handler := BinlogParser{}
 	rows := make([][]interface{}, 2)
 	insertRows := make([]interface{}, 8)
 	insertRows[0] = 1
@@ -139,7 +139,7 @@ func TestPanic(t *testing.T) {
 	}()
 
 	model := binlogInvalidStruct{}
-	handler := CommonHandler{}
+	handler := BinlogParser{}
 	rows := make([][]interface{}, 1)
 	insertRows := make([]interface{}, 6)
 	insertRows[0] = 1
@@ -158,7 +158,7 @@ func TestPanic(t *testing.T) {
 
 func TestJson(t *testing.T) {
 	model := JsonData{}
-	handler := CommonHandler{}
+	handler := BinlogParser{}
 	rows := make([][]interface{}, 1)
 	insertRows := make([]interface{}, 6)
 	insertRows[0] = 1

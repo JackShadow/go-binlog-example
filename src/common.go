@@ -10,9 +10,9 @@ import (
 	"time"
 )
 
-type CommonHandler struct {}
+type BinlogParser struct{}
 
-func (m *CommonHandler) GetBinLogData(element interface{}, e *canal.RowsEvent, n int) error {
+func (m *BinlogParser) GetBinLogData(element interface{}, e *canal.RowsEvent, n int) error {
 	var columnName string
 	var ok bool
 	v := reflect.ValueOf(element)
@@ -53,7 +53,7 @@ func (m *CommonHandler) GetBinLogData(element interface{}, e *canal.RowsEvent, n
 	}
 	return nil
 }
-func (m *CommonHandler) dateTimeHelper(e *canal.RowsEvent, n int, columnName string) time.Time {
+func (m *BinlogParser) dateTimeHelper(e *canal.RowsEvent, n int, columnName string) time.Time {
 
 	columnId := m.getBinlogIdByName(e, columnName)
 	if e.Table.Columns[columnId].Type != schema.TYPE_TIMESTAMP {
@@ -64,7 +64,7 @@ func (m *CommonHandler) dateTimeHelper(e *canal.RowsEvent, n int, columnName str
 	return t
 }
 
-func (m *CommonHandler) intHelper(e *canal.RowsEvent, n int, columnName string) int64 {
+func (m *BinlogParser) intHelper(e *canal.RowsEvent, n int, columnName string) int64 {
 
 	columnId := m.getBinlogIdByName(e, columnName)
 	if e.Table.Columns[columnId].Type != schema.TYPE_NUMBER {
@@ -84,7 +84,7 @@ func (m *CommonHandler) intHelper(e *canal.RowsEvent, n int, columnName string) 
 	return 0
 }
 
-func (m *CommonHandler) floatHelper(e *canal.RowsEvent, n int, columnName string) float64 {
+func (m *BinlogParser) floatHelper(e *canal.RowsEvent, n int, columnName string) float64 {
 
 	columnId := m.getBinlogIdByName(e, columnName)
 	if e.Table.Columns[columnId].Type != schema.TYPE_FLOAT {
@@ -100,7 +100,7 @@ func (m *CommonHandler) floatHelper(e *canal.RowsEvent, n int, columnName string
 	return float64(0)
 }
 
-func (m *CommonHandler) boolHelper(e *canal.RowsEvent, n int, columnName string) bool {
+func (m *BinlogParser) boolHelper(e *canal.RowsEvent, n int, columnName string) bool {
 
 	val := m.intHelper(e, n, columnName)
 	if val == 1 {
@@ -109,7 +109,7 @@ func (m *CommonHandler) boolHelper(e *canal.RowsEvent, n int, columnName string)
 	return false
 }
 
-func (m *CommonHandler) stringHelper(e *canal.RowsEvent, n int, columnName string) string {
+func (m *BinlogParser) stringHelper(e *canal.RowsEvent, n int, columnName string) string {
 
 	columnId := m.getBinlogIdByName(e, columnName)
 	if e.Table.Columns[columnId].Type == schema.TYPE_ENUM {
@@ -137,7 +137,7 @@ func (m *CommonHandler) stringHelper(e *canal.RowsEvent, n int, columnName strin
 	return ""
 }
 
-func (m *CommonHandler) getBinlogIdByName(e *canal.RowsEvent, name string) int {
+func (m *BinlogParser) getBinlogIdByName(e *canal.RowsEvent, name string) int {
 	for id, value := range e.Table.Columns {
 		if value.Name == name {
 			return id

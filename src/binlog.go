@@ -8,7 +8,7 @@ import (
 
 type binLogHandler struct {
 	canal.DummyEventHandler
-	CommonHandler
+	BinlogParser
 }
 
 func (h *binLogHandler) OnRow(e *canal.RowsEvent) error {
