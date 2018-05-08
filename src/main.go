@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	go binLogListener()
+	go binlogListener()
 
 	time.Sleep(2 * time.Minute)
 	fmt.Print("Thx for watching, goodbuy")

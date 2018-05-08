@@ -6,12 +6,12 @@ import (
 	"runtime/debug"
 )
 
-type binLogHandler struct {
+type binlogHandler struct {
 	canal.DummyEventHandler
 	BinlogParser
 }
 
-func (h *binLogHandler) OnRow(e *canal.RowsEvent) error {
+func (h *binlogHandler) OnRow(e *canal.RowsEvent) error {
 	defer func() {
 		if r := recover(); r != nil {
 			fmt.Print(r, " ", string(debug.Stack()))
@@ -42,7 +42,7 @@ func (h *binLogHandler) OnRow(e *canal.RowsEvent) error {
 			if e.Action == canal.UpdateAction {
 				oldUser := User{}
 				h.GetBinLogData(&oldUser, e, i-1)
-				fmt.Printf("User %d is updated from name %s to name %s\n", user.Id, oldUser.Name, user.Name, )
+				fmt.Printf("User %d name changed from %s to %s\n", user.Id, oldUser.Name, user.Name, )
 			} else {
 				fmt.Printf("User %d is created with name %s\n", user.Id, user.Name, )
 			}
@@ -52,16 +52,16 @@ func (h *binLogHandler) OnRow(e *canal.RowsEvent) error {
 	return nil
 }
 
-func (h *binLogHandler) String() string {
-	return "binLogHandler"
+func (h *binlogHandler) String() string {
+	return "binlogHandler"
 }
 
-func binLogListener() {
+func binlogListener() {
 	c, err := getDefaultCanal()
 	if err == nil {
 		coords, err := c.GetMasterPos()
 		if err == nil {
-			c.SetEventHandler(&binLogHandler{})
+			c.SetEventHandler(&binlogHandler{})
 			c.RunFrom(coords)
 		}
 	}
