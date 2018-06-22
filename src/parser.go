@@ -68,7 +68,7 @@ func (m *BinlogParser) intHelper(e *canal.RowsEvent, n int, columnName string) i
 
 	columnId := m.getBinlogIdByName(e, columnName)
 	if e.Table.Columns[columnId].Type != schema.TYPE_NUMBER {
-		panic("Not int type")
+		return 0
 	}
 
 	switch e.Rows[n][columnId].(type) {
@@ -80,6 +80,16 @@ func (m *BinlogParser) intHelper(e *canal.RowsEvent, n int, columnName string) i
 		return e.Rows[n][columnId].(int64)
 	case int:
 		return int64(e.Rows[n][columnId].(int))
+	case uint8:
+		return int64(e.Rows[n][columnId].(uint8))
+	case uint16:
+		return int64(e.Rows[n][columnId].(uint16))
+	case uint32:
+		return int64(e.Rows[n][columnId].(uint32))
+	case uint64:
+		return int64(e.Rows[n][columnId].(uint64))
+	case uint:
+		return int64(e.Rows[n][columnId].(uint))
 	}
 	return 0
 }
