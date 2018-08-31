@@ -1,6 +1,6 @@
 ### Golang binglog example project
 
-tested on go 10.10 and mariadb10.2 (binlog format must be 'raw')
+tested on go 1.10 and mariadb10.2 (binlog format must be 'raw')
 In binlog.go change with your connection data
 ```
 cfg.Addr = fmt.Sprintf("%s:%d", "127.0.0.1", 3306) //host,port
@@ -32,7 +32,7 @@ UPDATE Test.User SET name="Jonh" WHERE id=1;
 
 ```
 
-and you will see
+and you'll see
 ```
 User 1 is created with name Jack
 User 1 is updated from name Jack to name Jonh
