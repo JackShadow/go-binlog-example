@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/siddontang/go-mysql/canal"
 	"fmt"
+	"github.com/siddontang/go-mysql/canal"
 	"runtime/debug"
 )
 
@@ -17,17 +17,14 @@ func (h *binlogHandler) OnRow(e *canal.RowsEvent) error {
 			fmt.Print(r, " ", string(debug.Stack()))
 		}
 	}()
-	var n int
-	var k int
-	switch e.Action {
-	case canal.DeleteAction:
-		return nil
-	case canal.UpdateAction:
+
+	// base value for canal.DeleteAction or canal.InsertAction
+	var n = 0
+	var k = 1
+
+	if e.Action == canal.UpdateAction {
 		n = 1
 		k = 2
-	case canal.InsertAction:
-		n = 0
-		k = 1
 	}
 
 	for i := n; i < len(e.Rows); i += k {
@@ -38,13 +35,17 @@ func (h *binlogHandler) OnRow(e *canal.RowsEvent) error {
 		case User{}.SchemaName() + "." + User{}.TableName():
 			user := User{}
 			h.GetBinLogData(&user, e, i)
-
-			if e.Action == canal.UpdateAction {
+			switch e.Action {
+			case canal.UpdateAction:
 				oldUser := User{}
 				h.GetBinLogData(&oldUser, e, i-1)
-				fmt.Printf("User %d name changed from %s to %s\n", user.Id, oldUser.Name, user.Name, )
-			} else {
-				fmt.Printf("User %d is created with name %s\n", user.Id, user.Name, )
+				fmt.Printf("User %d name changed from %s to %s\n", user.Id, oldUser.Name, user.Name)
+			case canal.InsertAction:
+				fmt.Printf("User %d is created with name %s\n", user.Id, user.Name)
+			case canal.DeleteAction:
+				fmt.Printf("User %d is deleted with name %s\n", user.Id, user.Name)
+			default:
+				fmt.Printf("Unknown action")
 			}
 		}
 

@@ -28,10 +28,10 @@ func TestCommonHandler_GetBinLogDataGetBinLogData_Insert(t *testing.T) {
 	columns[0] = schema.TableColumn{Name: "int", Type: schema.TYPE_NUMBER}
 	columns[1] = schema.TableColumn{Name: "bool", Type: schema.TYPE_NUMBER}
 	columns[2] = schema.TableColumn{Name: "float", Type: schema.TYPE_FLOAT}
-	columns[3] = schema.TableColumn{Name: "enum", Type: schema.TYPE_ENUM, EnumValues: []string{"Active", "Deleted"},}
+	columns[3] = schema.TableColumn{Name: "enum", Type: schema.TYPE_ENUM, EnumValues: []string{"Active", "Deleted"}}
 	columns[4] = schema.TableColumn{Name: "string", Type: schema.TYPE_STRING}
 	columns[5] = schema.TableColumn{Name: "time", Type: schema.TYPE_TIMESTAMP}
-	columns[6] = schema.TableColumn{Name: "enum_null", Type: schema.TYPE_ENUM, EnumValues: []string{"Active", "Deleted"},}
+	columns[6] = schema.TableColumn{Name: "enum_null", Type: schema.TYPE_ENUM, EnumValues: []string{"Active", "Deleted"}}
 	columns[7] = schema.TableColumn{Name: "byte_text", Type: schema.TYPE_STRING}
 	table := schema.Table{Schema: "test", Name: "test", Columns: columns}
 
@@ -93,10 +93,10 @@ func TestCommonHandler_GetBinLogDataGetBinLogData_Update(t *testing.T) {
 	columns[0] = schema.TableColumn{Name: "int", Type: schema.TYPE_NUMBER}
 	columns[1] = schema.TableColumn{Name: "bool", Type: schema.TYPE_NUMBER}
 	columns[2] = schema.TableColumn{Name: "float", Type: schema.TYPE_FLOAT}
-	columns[3] = schema.TableColumn{Name: "enum", Type: schema.TYPE_ENUM, EnumValues: []string{"Active", "Deleted"},}
+	columns[3] = schema.TableColumn{Name: "enum", Type: schema.TYPE_ENUM, EnumValues: []string{"Active", "Deleted"}}
 	columns[4] = schema.TableColumn{Name: "string", Type: schema.TYPE_STRING}
 	columns[5] = schema.TableColumn{Name: "time", Type: schema.TYPE_TIMESTAMP}
-	columns[6] = schema.TableColumn{Name: "enum_null", Type: schema.TYPE_ENUM, EnumValues: []string{"Active", "Deleted"},}
+	columns[6] = schema.TableColumn{Name: "enum_null", Type: schema.TYPE_ENUM, EnumValues: []string{"Active", "Deleted"}}
 	columns[7] = schema.TableColumn{Name: "byte_text", Type: schema.TYPE_STRING}
 	table := schema.Table{Schema: "test", Name: "test", Columns: columns}
 
@@ -199,7 +199,7 @@ type binlogTestStruct struct {
 	EnumNull        string    `gorm:"column:enum_null"`
 	ByteText        string    `gorm:"column:byte_text"`
 	WillNotParse    int
-	WillNotParseAlt int       `gorm:"column"`
+	WillNotParseAlt int `gorm:"column"`
 }
 
 type binlogInvalidStruct struct {

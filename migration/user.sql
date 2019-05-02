@@ -10,3 +10,4 @@ create table Test.User
 
 INSERT Into Test.User (`id`,`name`) VALUE (1,"Jack");
 UPDATE Test.User SET name="Jonh" WHERE id=1;
+DELETE FROM Test.User WHERE id=1;
